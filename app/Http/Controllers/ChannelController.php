@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Channel;
 use App\API\ApiHelper;
-use App\Repos\Repository;
+use App\Repo\Repository;
 use Illuminate\Http\Request;
 
 class ChannelController extends Controller
@@ -23,10 +23,10 @@ class ChannelController extends Controller
      */
     public function __construct(Channel $channel)
     {
-        $this->model = new Repository( $channel );
+        $this->model = new Repository($channel);
 
         // Protect all except reading
-        $this->middleware('auth:api', ['except' => ['index', 'show'] ]);
+        $this->middleware('auth:api', ['except' => ['index', 'show']]);
     }
 
     /**
@@ -42,7 +42,8 @@ class ChannelController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,14 +52,15 @@ class ChannelController extends Controller
         $this->beforeCreate($request);
 
         return $request->user()->channels()
-            ->create( $request->only($this->model->getModel()->fillable));
+            ->create($request->only($this->model->getModel()->fillable));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int     $id
      * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
@@ -66,7 +68,7 @@ class ChannelController extends Controller
         $channel = $this->model->with('user')->findOrFail($id);
 
         // check for videos
-        if( $request->has('videos') ) {
+        if ($request->has('videos')) {
             $channel->videos = $channel->videos()->with(['channel', 'category'])->latest()->paginate(8);
         }
 
@@ -76,8 +78,9 @@ class ChannelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -85,11 +88,11 @@ class ChannelController extends Controller
         $this->beforeUpdate($request);
 
         // validate the channel id belongs to user
-        if( ! $request->user()->channels()->find($id) ) {
+        if (!$request->user()->channels()->find($id)) {
             return $this->errorForbidden('You can only edit your channel.');
         }
 
-        if (! $this->model->update($request->only($this->model->getModel()->fillable), $id) ) {
+        if (!$this->model->update($request->only($this->model->getModel()->fillable), $id)) {
             return $this->errorBadRequest('Unable to update.');
         }
 
@@ -99,14 +102,15 @@ class ChannelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int     $id
      * @param Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id, Request $request)
     {
         // run before delete checks
-        if (! $request->user()->channels()->find($id)) {
+        if (!$request->user()->channels()->find($id)) {
             return $this->errorNotFound('Channel not found.');
         }
 
