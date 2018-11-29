@@ -46245,11 +46245,12 @@ module.exports = Component.exports
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(91)
 /* template */
-var __vue_template__ = null
+var __vue_template__ = __webpack_require__(90)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -46267,6 +46268,22 @@ var Component = normalizeComponent(
   __vue_module_identifier__
 )
 Component.options.__file = "resources/js/components/pages/VideoDetailPage.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-92fa1896", Component.options)
+  } else {
+    hotAPI.reload("data-v-92fa1896", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
 
 module.exports = Component.exports
 
@@ -49480,6 +49497,921 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
         console.log('Component mounted.');
+    }
+});
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("div", { staticClass: "video-player" }, [
+          _vm.youtubeId
+            ? _c("div", { staticClass: "videoWrapper" }, [
+                _c("iframe", {
+                  attrs: {
+                    width: "560",
+                    height: "349",
+                    src:
+                      "http://www.youtube.com/embed/" +
+                      _vm.youtubeId +
+                      "?rel=0&hd=1&autoplay=1&showinfo=0",
+                    frameborder: "0",
+                    allowfullscreen: ""
+                  }
+                })
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.youtubeId
+            ? _c("div", { staticClass: "video-card" }, [
+                _c("img", {
+                  staticClass: "img-responsive",
+                  attrs: { src: _vm.videoThumb(_vm.video.thumbnail), alt: "" }
+                })
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel panel-default" }, [
+          _c("div", { staticClass: "panel-body" }, [
+            _c("div", { staticClass: "video-desc" }, [
+              _c("h3", [_vm._v(_vm._s(_vm.video.title))]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-8" }, [
+                  _c("div", { staticClass: "media" }, [
+                    _c(
+                      "div",
+                      { staticClass: "media-left media-middle" },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                name: "ChannelPage",
+                                params: {
+                                  id: _vm.video.channel_id,
+                                  slug: _vm.$root.slug(_vm.video.channel.name)
+                                }
+                              }
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "media-object",
+                              attrs: {
+                                src: _vm.video.channel.logo,
+                                alt: "avatar"
+                              }
+                            })
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "media-body" }, [
+                      _c(
+                        "h4",
+                        { staticClass: "media-heading" },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              attrs: {
+                                to: {
+                                  name: "ChannelPage",
+                                  params: {
+                                    id: _vm.video.channel_id,
+                                    slug: _vm.$root.slug(_vm.video.channel.name)
+                                  }
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                                " +
+                                  _vm._s(_vm.video.channel.name) +
+                                  "\n                                            "
+                              )
+                            ]
+                          ),
+                          _vm._v(_vm._s(_vm.video.created_at))
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm._m(0)
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4 text-right view-count" }, [
+                  _c("h3", [
+                    _vm._v(
+                      _vm._s(_vm.video.views) +
+                        " view" +
+                        _vm._s(_vm.video.views > 1 ? "s" : "")
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(1)
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel panel-default" }, [
+          _c("div", { staticClass: "panel-body" }, [
+            _c("h5", { staticClass: "text-dark" }, [
+              _vm._v("Published on " + _vm._s(_vm.video.updated_at))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "desc-text" }, [
+              _c("p", [_vm._v(_vm._s(_vm.video.description))])
+            ]),
+            _c("p"),
+            _vm._v(" "),
+            _c("h5", { staticClass: "text-dark" }, [
+              _vm._v("Category "),
+              _c("a", { attrs: { href: "" } }, [
+                _vm._v(_vm._s(_vm.video.category.name))
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel panel-default" }, [
+          _c("div", { staticClass: "panel-heading comment-box" }, [
+            _vm._v("Comment")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-body" }, [
+            _vm.canComment()
+              ? _c("div", { staticClass: "media" }, [
+                  _c("div", { staticClass: "media-left" }, [
+                    _c("a", { attrs: { href: "#" } }, [
+                      _c("img", {
+                        staticClass: "media-object",
+                        attrs: {
+                          width: "48",
+                          src: _vm.$root.auth.avatar,
+                          alt: _vm.$root.auth.name
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "media-body" }, [
+                    _c(
+                      "form",
+                      {
+                        attrs: { method: "post", action: "" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            _vm.saveComment()
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.newComment,
+                                expression: "newComment"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              required: "",
+                              name: "comment",
+                              placeholder:
+                                "Commenting as " + _vm.$root.auth.name
+                            },
+                            domProps: { value: _vm.newComment },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.newComment = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "text-right" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-default",
+                              attrs: {
+                                type: "reset",
+                                disabled: !_vm.newComment || _vm.commenting
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.newComment = null
+                                }
+                              }
+                            },
+                            [_vm._v("Cancel")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-info",
+                              attrs: {
+                                type: "submit",
+                                disabled: !_vm.newComment || _vm.commenting
+                              }
+                            },
+                            [
+                              _c("span", {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.commenting,
+                                    expression: "commenting"
+                                  }
+                                ],
+                                staticClass: "glyphicon glyphicon-refresh spin"
+                              }),
+                              _vm._v(
+                                " Comment\n                                    "
+                              )
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.canComment()
+              ? _c("div", { staticClass: "text-center" }, [
+                  _vm._v("\n                        Please "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-xs btn-primary",
+                      attrs: { href: "/login" }
+                    },
+                    [_vm._v("Login")]
+                  ),
+                  _vm._v(" to post comment.\n                    ")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "comment-thread" }, [
+              _c(
+                "div",
+                { staticClass: "discussions" },
+                [
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.loading,
+                          expression: "loading"
+                        }
+                      ],
+                      staticClass: "text-center"
+                    },
+                    [
+                      _c("span", {
+                        staticClass: "glyphicon glyphicon-refresh spin"
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "h5",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.comments.data.length,
+                          expression: "comments.data.length"
+                        }
+                      ]
+                    },
+                    [_vm._v("COMMENTS • " + _vm._s(_vm.comments.data.length))]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.comments.data, function(comment, index) {
+                    return _c("div", { key: index, staticClass: "media" }, [
+                      _c("div", { staticClass: "media-left media-top" }, [
+                        _c("a", { attrs: { href: "" } }, [
+                          _c("img", {
+                            staticClass: "media-object",
+                            attrs: {
+                              width: "48",
+                              src: comment.user.avatar,
+                              alt: comment.user.name
+                            }
+                          })
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "media-body" }, [
+                        _c("div", { staticClass: "dropdown pull-right" }, [
+                          _vm._m(2, true),
+                          _vm._v(" "),
+                          _c(
+                            "ul",
+                            {
+                              staticClass: "dropdown-menu",
+                              attrs: { "aria-labelledby": "dropdownMenu1" }
+                            },
+                            [
+                              _vm.$root.auth &&
+                              _vm.$root.auth.id == comment.user_id
+                                ? _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: { href: "#" },
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            _vm.deleteComment(index)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("span", {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value: !_vm.commenting,
+                                              expression: "!commenting"
+                                            }
+                                          ],
+                                          staticClass:
+                                            "glyphicon glyphicon-trash text-danger"
+                                        }),
+                                        _vm._v(" Delete")
+                                      ]
+                                    )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm._m(3, true)
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("h4", { staticClass: "media-heading" }, [
+                          _c("a", { attrs: { href: "" } }, [
+                            _vm._v(_vm._s(comment.user.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("small", [_vm._v(_vm._s(comment.created_at))])
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "desc-text" }, [
+                          _vm._v(_vm._s(comment.body) + "﻿")
+                        ])
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-5" }, [
+        _c("div", { staticClass: "panel panel-default" }, [
+          _c(
+            "div",
+            { staticClass: "panel-body video-aside" },
+            _vm._l(_vm.video.related, function(related, id) {
+              return _c("div", { key: id, staticClass: "media" }, [
+                _c(
+                  "div",
+                  { staticClass: "media-left" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "VideoDetailPage",
+                            params: {
+                              id: related.id,
+                              slug: _vm.$root.slug(related.title)
+                            }
+                          }
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "media-object",
+                          attrs: { src: related.thumbnail, alt: related.title }
+                        })
+                      ]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "media-body" }, [
+                  _c(
+                    "h3",
+                    { staticClass: "media-heading" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          attrs: {
+                            to: {
+                              name: "VideoDetailPage",
+                              params: {
+                                id: related.id,
+                                slug: _vm.$root.slug(related.title)
+                              }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(related.title) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          attrs: {
+                            to: {
+                              name: "ChannelPage",
+                              params: {
+                                id: related.channel_id,
+                                slug: _vm.$root.slug(related.channel.name)
+                              }
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(related.channel.name) +
+                              "\n                                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(related.views) +
+                          " views • " +
+                          _vm._s(related.created_at) +
+                          "\n                            "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ])
+            })
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "btn-group btn-group-sm",
+        attrs: { role: "group", "aria-label": "..." }
+      },
+      [
+        _c("button", { staticClass: "btn btn-subscribe btn-primary" }, [
+          _c("span", { staticClass: "glyphicon glyphicon-play" }),
+          _vm._v(" Subscribe")
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-default", attrs: { disabled: "" } },
+          [_vm._v("56,454")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-body video-footer" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("a", { attrs: { href: "" } }, [
+            _c("span", { staticClass: "glyphicon glyphicon-plus" }),
+            _vm._v(" Add to ")
+          ]),
+          _vm._v(" "),
+          _c("a", { attrs: { href: "" } }, [
+            _c("span", { staticClass: "glyphicon glyphicon-share" }),
+            _vm._v(" Share ")
+          ]),
+          _vm._v(" "),
+          _c("a", { attrs: { href: "" } }, [
+            _c("span", {
+              staticClass: "glyphicon glyphicon-option-horizontal"
+            }),
+            _vm._v(" More ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4 text-right" }, [
+          _c("a", { attrs: { href: "" } }, [
+            _c("span", { staticClass: "glyphicon glyphicon-thumbs-up" }),
+            _vm._v(" 32 ")
+          ]),
+          _vm._v(" "),
+          _c("a", { attrs: { href: "" } }, [
+            _c("span", { staticClass: "glyphicon glyphicon-thumbs-down" }),
+            _vm._v(" 12 ")
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm btn-default dropdown-toggle",
+        attrs: {
+          type: "button",
+          id: "dropdownMenu1",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "true"
+        }
+      },
+      [_c("span", { staticClass: "glyphicon glyphicon-option-vertical" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("span", { staticClass: "glyphicon glyphicon-flag" }),
+        _vm._v(" Report It")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-92fa1896", module.exports)
+  }
+}
+
+/***/ }),
+/* 91 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id', 'slug'],
+    data: function data() {
+        return {
+            video: {
+                channel: {
+                    id: 1,
+                    logo: '/img/avatar-placeholder.jpg'
+                },
+                category: {},
+                related: []
+            },
+            comments: {
+                data: []
+            },
+            newComment: null,
+            loading: false,
+            commenting: false,
+            youtubeId: false
+        };
+    },
+
+    watch: {
+        '$route': function $route(to, from) {
+            this.getVideo();
+            this.fetchComments();
+        }
+    },
+    mounted: function mounted() {
+        this.getVideo();
+        this.fetchComments();
+        console.log('Video Details Component mounted.', this.id);
+    },
+
+    methods: {
+        getVideo: function getVideo() {
+            var _this = this;
+
+            this.$Progress.start();
+            axios.get('/api/videos/' + this.id + '?related=true').then(function (res) {
+                _this.$Progress.finish();
+                _this.video = res.data;
+                // set the youtube id if its youtube video
+                _this.youtubeId = _this.isYoutube(_this.video.url);
+                // change the title of page
+                window.document.title = _this.video.title;
+            }).catch(function (err) {
+                _this.$Progress.finish();
+            });
+        },
+        videoThumb: function videoThumb(thumb) {
+            return "http://lorempixel.com/660/366/?" + this.video.id;
+        },
+        canComment: function canComment() {
+            return Laravel.hasOwnProperty('Auth');
+        },
+        fetchComments: function fetchComments(url) {
+            var _this2 = this;
+
+            url = url || '/api/comments?video_id=' + this.id;
+            this.loading = true;
+            axios.get(url).then(function (res) {
+                _this2.loading = false;
+                _this2.comments = res.data;
+            }).catch(function (err) {
+                _this2.loading = false;
+            });
+        },
+        saveComment: function saveComment() {
+            var vm = this;
+            vm.commenting = true;
+            axios.post('/api/comments', {
+                body: this.newComment,
+                video_id: this.video.id
+            }).then(function (res) {
+                vm.newComment = '';
+                vm.comments.data.unshift(res.data);
+                vm.commenting = false;
+            }).catch(function (error) {
+                console.log(error);
+                vm.commenting = false;
+            });
+        },
+        deleteComment: function deleteComment(index) {
+            var vm = this;
+            var comment = vm.comments.data[index];
+            if (window.confirm('Are sure want to delete this comment?')) {
+                vm.$Progress.start();
+                axios.delete('/api/comments/' + comment.id).then(function (res) {
+                    vm.comments.data.splice(index, 1);
+                    vm.$Progress.finish();
+                }).catch(function (error) {
+                    console.log(error);
+                    vm.$Progress.finish();
+                });
+            }
+        },
+        isYoutube: function isYoutube(url) {
+            var pattern = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+            var matches = url.match(pattern);
+            if (matches) {
+                return matches[1];
+            }
+            return false;
+        }
     }
 });
 
