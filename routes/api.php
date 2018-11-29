@@ -16,3 +16,26 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resource(
+    'videos',
+    'VideoController',
+    ['except' => ['create', 'edit']]
+);
+
+Route::resource(
+    'channels',
+    'ChannelController',
+    ['except' => ['create', 'edit']]
+);
+
+Route::resource(
+    'comments',
+    'CommentController',
+    ['except' => ['create', 'edit']]
+);
+
+// Get current user
+Route::get('/me', function (Request $request) {
+    return $request->user();
+})->middleware('auth:api');
