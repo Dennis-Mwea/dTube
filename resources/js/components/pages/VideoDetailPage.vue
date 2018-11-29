@@ -64,7 +64,7 @@
                     <div class="panel-body">
                         <h5 class="text-dark">Published on {{ video.updated_at }}</h5>
 
-                        <div class="desc-text"><p>{{ video.description }}</p></div></p>
+                        <div class="desc-text"><p>{{ video.description }}</p></div>
                         <h5 class="text-dark">Category <a href="">{{ video.category.name }}</a></h5>
                     </div>
                 </div>
@@ -188,6 +188,7 @@
                       logo: '/img/avatar-placeholder.jpg'
                   },
                   category: {
+
                   },
                   related: []
               },
@@ -200,39 +201,48 @@
               youtubeId: false
           }
         },
+
         watch: {
             '$route' (to, from) {
                 this.getVideo();
                 this.fetchComments();
             }
         },
+
         mounted() {
             this.getVideo();
             this.fetchComments();
             console.log('Video Details Component mounted.', this.id);
         },
+
         methods: {
             getVideo() {
                 this.$Progress.start();
                 axios.get('/api/videos/' + this.id + '?related=true' ).then((res) => {
                     this.$Progress.finish();
                     this.video = res.data;
+
                     // set the youtube id if its youtube video
                     this.youtubeId = this.isYoutube(this.video.url);
+
                     // change the title of page
                     window.document.title = this.video.title;
                 }).catch((err) => {
                     this.$Progress.finish();
                 });
             },
+
             videoThumb(thumb) {
               return "http://lorempixel.com/660/366/?" + this.video.id
             },
+
             canComment() {
                 return Laravel.hasOwnProperty('Auth')
             },
+
             fetchComments(url) {
                 url = url || '/api/comments?video_id=' + this.id;
+
                 this.loading = true;
                 axios.get( url ).then((res) => {
                     this.loading = false;
@@ -241,9 +251,11 @@
                     this.loading = false;
                 });
             },
+
             saveComment() {
                 let vm = this;
                     vm.commenting = true;
+
                 axios.post('/api/comments', {
                     body: this.newComment,
                     video_id: this.video.id
@@ -256,9 +268,11 @@
                     vm.commenting = false;
                 });
             },
+
             deleteComment(index) {
                 let vm = this;
                 let comment = vm.comments.data[index];
+
                 if( window.confirm('Are sure want to delete this comment?')) {
                     vm.$Progress.start();
                     axios.delete('/api/comments/' + comment.id).then(function (res) {
@@ -270,6 +284,7 @@
                     });
                 }
             },
+
             isYoutube(url) {
                 let pattern = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
                 let matches = url.match(pattern);

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
+use App\Channel;
 use App\API\ApiHelper;
 use App\Repos\Repository;
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+class ChannelController extends Controller
 {
     use ApiHelper;
 
@@ -17,13 +17,13 @@ class CommentController extends Controller
     protected $model;
 
     /**
-     * CommentController constructor.
+     * ChannelController constructor.
      *
-     * @param Comment $comment
+     * @param Channel $channel
      */
-    public function __construct(Comment $comment)
+    public function __construct(Channel $channel)
     {
-        $this->model = new Repository( $comment );
+        $this->model = new Repository( $channel );
 
         // Protect all except reading
         $this->middleware('auth:api', ['except' => ['index', 'show'] ]);
@@ -32,19 +32,11 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $comments = $this->model->with('user')->latest();
-
-        // check for video_id in request
-        if ($vid =  $request->get('video_id') ) {
-            $comments = $comments->where('video_id' , $vid);
-        }
-
-        return $comments->paginate();
+        return $this->model->with('user')->latest()->paginate();
     }
 
     /**
@@ -58,21 +50,27 @@ class CommentController extends Controller
         // run the validation
         $this->beforeCreate($request);
 
-        $comment = $request->user()->comments()
+        return $request->user()->channels()
             ->create( $request->only($this->model->getModel()->fillable));
-
-        return $this->model->with('user')->find($comment->id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        return $this->model->with('user')->findOrFail($id);
+        $channel = $this->model->with('user')->findOrFail($id);
+
+        // check for videos
+        if( $request->has('videos') ) {
+            $channel->videos = $channel->videos()->with(['channel', 'category'])->latest()->paginate(8);
+        }
+
+        return $channel;
     }
 
     /**
@@ -85,6 +83,11 @@ class CommentController extends Controller
     public function update(Request $request, $id)
     {
         $this->beforeUpdate($request);
+
+        // validate the channel id belongs to user
+        if( ! $request->user()->channels()->find($id) ) {
+            return $this->errorForbidden('You can only edit your channel.');
+        }
 
         if (! $this->model->update($request->only($this->model->getModel()->fillable), $id) ) {
             return $this->errorBadRequest('Unable to update.');
@@ -103,8 +106,8 @@ class CommentController extends Controller
     public function destroy($id, Request $request)
     {
         // run before delete checks
-        if (! $request->user()->comments()->find($id)) {
-            return $this->errorNotFound('Comment not found.');
+        if (! $request->user()->channels()->find($id)) {
+            return $this->errorNotFound('Channel not found.');
         }
 
         return $this->model->delete($id) ? $this->noContent() : $this->errorBadRequest();

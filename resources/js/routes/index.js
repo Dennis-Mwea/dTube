@@ -46,7 +46,7 @@ export default new Router({
             name: 'UploadPage',
             component: UploadPage,
             beforeEnter: (to, from, next) => {
-                if (window.Laravel.hasOwnProperty('Auth')) {
+                if( window.Laravel.hasOwnProperty('Auth') ) {
                     next(true);
                 } else {
                     next(false);
@@ -59,7 +59,7 @@ export default new Router({
             name: 'AccountPage',
             component: AccountPage,
             beforeEnter: (to, from, next) => {
-                if (window.Laravel.hasOwnProperty('Auth')) {
+                if( window.Laravel.hasOwnProperty('Auth') ) {
                     next(true);
                 } else {
                     next(false);
@@ -68,4 +68,4 @@ export default new Router({
             }
         }
     ]
-})
+});

@@ -26,6 +26,7 @@
 </template>
 
 <script>
+
     export default {
         data() {
             return {
@@ -34,8 +35,10 @@
                 }
             }
         },
+
         mounted() {
             this.$Progress.start();
+
             axios.get('/api/videos').then((res) => {
                 this.$Progress.finish();
                 this.videos = res.data;
@@ -43,6 +46,7 @@
                 this.$Progress.finish();
                 console.log(err);
             });
+
             console.log('Home Component mounted.')
         }
     }

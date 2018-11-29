@@ -1,7 +1,8 @@
 <template>
     <div class="row">
-        <div v-for="(video, id) in list" :key="id"  class="video-grid col-xs-6 col-sm-4 col-md-3">
+        <div v-for="video in list"  class="video-grid col-xs-6 col-sm-4 col-md-3">
             <div class="video">
+
                 <div class="thumbnail">
                     <router-link :to="{ name: 'VideoDetailPage', params: { id: video.id, slug: $root.slug(video.title) }}">
                         <img :src="video.thumbnail" :alt="video.title">
@@ -21,6 +22,7 @@
                         <br>
                         {{ video.views }} views &bull; {{ video.created_at }}</p>
                 </div>
+
             </div>
         </div>
     </div>
@@ -29,6 +31,7 @@
 <script>
     export default {
         props: ['list'],
+
         mounted() {
             console.log('Video Thumb mounted.')
         }

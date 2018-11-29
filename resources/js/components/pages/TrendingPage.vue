@@ -13,7 +13,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li v-for="(category, id) in categories" :key="id"><a href="#">{{ category.name }}</a></li>
+                                        <li v-for="cat in categories"><a href="#">{{ cat.name }}</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -47,10 +47,12 @@
                 categories: []
             }
         },
+
         mounted() {
             this.$Progress.start();
             // change the title of page
             window.document.title = 'Trending on QTube';
+
             axios.get('/api/videos?trending=true&categories=true').then((res) => {
                 this.$Progress.finish();
                 this.videos = res.data;
@@ -59,6 +61,7 @@
                 this.$Progress.finish();
                 console.log(err);
             });
+
             console.log('Trending Component mounted.')
         }
     }
