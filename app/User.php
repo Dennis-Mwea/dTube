@@ -2,13 +2,14 @@
 
 namespace App;
 
-use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,6 +18,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'avatar',
     ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -29,12 +31,11 @@ class User extends Authenticatable
     public function getAvatarAttribute($val)
     {
         // if no avatar fallback to gravtar
-        if (empty($val)) {
+        if ( empty($val) ) {
             $email = $this->email;
             $default = asset('img/avatar-placeholder.jpg');
             $size = 128;
-
-            return 'https://www.gravatar.com/avatar/'.md5(strtolower(trim($email))).'?d='.urlencode($default).'&s='.$size;
+            return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
         }
 
         return $val;

@@ -13,27 +13,28 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = ['body', 'video_id'];
+
     protected $casts = [
         'video_id' => 'integer',
         'user_id' => 'integer',
-        'approved' => 'boolean',
+        'approved' => 'boolean'
     ];
 
     /**
-     * Validation rules.
+     * Validation rules
      *
      * @param bool $forUpdate
-     *
      * @return array
      */
     public function getValidationRules($forUpdate = false)
     {
         $createRule = [
             'video_id' => 'required|integer|exists:videos,id',
-            'body' => 'required|min:3',
+            'body' => 'required|min:3'
         ];
+
         $updateRule = [
-            'body' => 'required|min:3',
+            'body' => 'required|min:3'
         ];
 
         return $forUpdate ? $updateRule : $createRule;

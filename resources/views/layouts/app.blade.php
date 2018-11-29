@@ -16,6 +16,7 @@
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
+
         @if(Auth::check())
             window.Laravel.Auth = {!! json_encode( Auth::user() ) !!};
             window.Laravel.Auth.Videos = {!! json_encode( Auth::user()->videos()->with(['channel', 'category'])->limit(4)->latest()->get() ) !!};
@@ -113,7 +114,7 @@
 
         <footer>
             <div class="text-center mt">
-                <p>This is a demo for YouTube like app using Vue.js &amp; Laravel by <a target="_blank" href="http://www.dytech.co.ke">www.dytech.co.ke</a></p>
+                <p>This is a demo for YouTube like app using Vue.js &amp; Laravel by <a target="_blank" href="http://www.QCode.in">www.QCode.in</a></p>
             </div>
         </footer>
     </div>

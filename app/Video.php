@@ -15,18 +15,18 @@ class Video extends Model
     protected $fillable = [
        'title', 'description', 'published',
         'url', 'thumbnail', 'allow_comments',
-        'channel_id', 'category_id', 'user_id',
+        'channel_id', 'category_id', 'user_id'
     ];
+
     protected $casts = [
         'published' => 'boolean',
-        'allow_comments' => 'boolean',
+        'allow_comments' => 'boolean'
     ];
 
     /**
-     * Validation rules.
+     * Validation rules
      *
      * @param bool $forUpdate
-     *
      * @return array
      */
     public function getValidationRules($forUpdate = false)
@@ -38,13 +38,14 @@ class Video extends Model
             'allow_comments' => 'boolean',
             'url' => 'required|url',
             'thumbnail' => 'required|url',
-            'channel_id' => 'required|integer',
+            'channel_id' => 'required|integer'
         ];
+
         $updateRule = [
             'title' => 'max:200',
             'description' => 'min:10',
             'url' => 'url',
-            'thumbnail' => 'url',
+            'thumbnail' => 'url'
         ];
 
         return $forUpdate ? $updateRule : $createRule;
@@ -68,7 +69,7 @@ class Video extends Model
     public function user()
     {
         return $this->belongsTo(User::class)->select([
-            'id', 'name', 'avatar', 'created_at',
+            'id', 'name', 'avatar', 'created_at'
         ]);
     }
 

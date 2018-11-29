@@ -12,24 +12,25 @@ class Channel extends Model
      * @var array
      */
     protected $fillable = ['name', 'logo', 'cover', 'about'];
+
     protected $casts = [
-        'user_id' => 'integer',
+        'user_id' => 'integer'
     ];
 
     /**
-     * Validation rules.
+     * Validation rules
      *
      * @param bool $forUpdate
-     *
      * @return array
      */
     public function getValidationRules($forUpdate = false)
     {
         $createRule = [
-            'name' => 'required|min:3|max:60',
+            'name' => 'required|min:3|max:60'
         ];
+
         $updateRule = [
-            'name' => 'min:3|max:60',
+            'name' => 'min:3|max:60'
         ];
 
         return $forUpdate ? $updateRule : $createRule;
@@ -44,4 +45,6 @@ class Channel extends Model
     {
         return $this->belongsTo(User::class)->select('id', 'name', 'avatar');
     }
+
+
 }

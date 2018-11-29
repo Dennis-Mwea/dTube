@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Video;
 use App\API\ApiHelper;
-use App\Repo\Repository;
+use App\Repos\Repository;
 use Illuminate\Http\Request;
 
 class VideoController extends Controller
@@ -24,17 +24,16 @@ class VideoController extends Controller
      */
     public function __construct(Video $video)
     {
-        $this->model = new Repository($video);
+        $this->model = new Repository( $video );
 
         // Protect all except reading
-        $this->middleware('auth:api', ['except' => ['index', 'show']]);
+        $this->middleware('auth:api', ['except' => ['index', 'show'] ]);
     }
 
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
-     *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -42,7 +41,7 @@ class VideoController extends Controller
         $query = $this->model->with(['channel']);
 
         // check for trending
-        if ($request->has('trending')) {
+        if ( $request->has('trending')) {
             $query->orderBy('views', 'desc');
         }
 
@@ -60,8 +59,7 @@ class VideoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -70,7 +68,7 @@ class VideoController extends Controller
         $this->beforeCreate($request);
 
         // validate the channel id belongs to user
-        if (!$request->user()->channels()->find($request->get('channel_id', 0))) {
+        if( ! $request->user()->channels()->find($request->get('channel_id', 0)) ) {
             return $this->errorForbidden('You can only add video in your channel.');
         }
 
@@ -82,17 +80,16 @@ class VideoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int     $id
+     * @param  int $id
      * @param Request $request
-     *
      * @return \Illuminate\Http\Response
      */
     public function show($id, Request $request)
     {
-        $video = $this->model->with(['channel', 'category'])->findOrFail($id);
+        $video =  $this->model->with(['channel', 'category'])->findOrFail($id);
 
         // check related video requested
-        if ($request->has('related')) {
+        if( $request->has('related') ) {
             $video->related = $this->model->with(['channel'])->inRandomOrder()->limit(16)->get();
         }
 
@@ -105,16 +102,15 @@ class VideoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
-     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $this->beforeUpdate($request);
 
-        if (!$this->model->update($request->only($this->model->getModel()->fillable), $id)) {
+        if (! $this->model->update($request->only($this->model->getModel()->fillable), $id) ) {
             return $this->errorBadRequest('Unable to update.');
         }
 
@@ -124,15 +120,14 @@ class VideoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int     $id
+     * @param  int $id
      * @param Request $request
-     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id, Request $request)
     {
         // run before delete checks
-        if (!$request->user()->videos()->find($id)) {
+        if (! $request->user()->videos()->find($id)) {
             return $this->errorNotFound('Video not found.');
         }
 
