@@ -18,7 +18,7 @@
                                         <label for="category" class="col-sm-2 control-label">Category</label>
                                         <div class="col-sm-10">
                                             <select v-model="video.category_id" required name="category" class="form-control" id="category">
-                                                <option :value="cat.id" v-for="cat in categories">{{ cat.name }}</option>
+                                                <option :value="cat.id" v-for="(cat, id) in categories" :key="id">{{ cat.name }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -117,7 +117,7 @@
                 // add other fields
                 vm.video.thumbnail = vm.videoThumb;
                 vm.video.channel_id = vm.$root.channel.id;
-
+                
                 axios.post('/api/videos', vm.video).then(function (res) {
                     vm.video = {};
                     vm.loading = false;
